@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Recette :
+	{# {{recipe.title}} #}
+{% endblock %}
+
+{% block body %}
+    {# {{ dump(recipe) }} #}
+	<div class="container mt-2">
+		<h1>
+			Recettes : <button type="button" class="btn btn-warning">{{recipe.title}}</button>
+		</h1>
+        <p>Dure de preparation : <strong class="text-danger">{{recipe.durations}} min</strong></p>
+		<p>{{recipe.content | nl2br }}</p>
+	</div>
+
+{% endblock %}
