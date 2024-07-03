@@ -34,14 +34,14 @@ class RecetteController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}-{id}', name: "recette_show", requirements: ['id' => '\d+', 'slug' => '[A-Za-z0-9-]+'])]
+    #[Route('/{slug}-{id}', name: "recipe_show", requirements: ['id' => '\d+', 'slug' => '[A-Za-z0-9-]+'])]
     public function show(string $slug, int $id, RecipeRepository $recipe): Response
     {
 
         $recipe = $recipe->find($id);
         // dd($recipe);
         if ($slug !== $recipe->getSlug()) {
-            return $this->redirectToRoute('recette.show', ['slug' => $recipe->getSlug(), 'id' => $id]);
+            return $this->redirectToRoute('recipe_show', ['slug' => $recipe->getSlug(), 'id' => $id]);
         }
         return $this->render('recette/show.html.twig', [
             'recipe' => $recipe,

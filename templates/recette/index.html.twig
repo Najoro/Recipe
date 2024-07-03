@@ -21,7 +21,7 @@
         {% for recipe in recipes %}
 
 					<tr>
-						<td scope="row"><a href={{ path('recette_show', {id : recipe.id , slug : recipe.slug} ) }}>{{recipe.title}}</a></td>
+						<td scope="row"><a href={{ path('recipe_show', {id : recipe.id , slug : recipe.slug} ) }}>{{recipe.title}}</a></td>
 						<td>{{recipe.durations}}</td>
 						<td>
 							<a class="btn btn-warning btn-sm" href="">Editer</a>
