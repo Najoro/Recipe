@@ -8,7 +8,7 @@
 
 	<div class="container mt-2">
 		<h1>Liste des Recettes</h1>
-		<a class="btn btn-primary mb-2" href={{path('recipe_creat_new_recipe')}}>Nouvelle recette</a>
+		<a class="btn btn-primary mb-2" href={{path('recipe_created')}}>Nouvelle recette</a>
 		<table class="table table-striped table-inverse table-responsive">
 			<thead class="thead-inverse">
 				<tr>
@@ -21,7 +21,7 @@
         {% for recipe in recipes %}
 
 					<tr>
-						<td scope="row"><a href={{ path('recette.show', {id : recipe.id , slug : recipe.slug} ) }}>{{recipe.title}}</a></td>
+						<td scope="row"><a href={{ path('recette_show', {id : recipe.id , slug : recipe.slug} ) }}>{{recipe.title}}</a></td>
 						<td>{{recipe.durations}}</td>
 						<td>
 							<a class="btn btn-warning btn-sm" href="">Editer</a>

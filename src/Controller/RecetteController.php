@@ -13,9 +13,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/recipe')]
 class RecetteController extends AbstractController
 {
-    #[Route('recette/{slug}-{id}', name: "recette.show", requirements: ['id' => '\d+', 'slug' => '[A-Za-z0-9-]+'])]
+
+    private EntityManagerInterface $em;
+    public function __construct(EntityManagerInterface $em)
+    {
+       $this->em = $em;
+    }
+ 
+
+    #RecipeRepository => recupere la base de donne
+    #[Route('/', name: 'recipe_index')]
+    public function index(EntityManagerInterface $em): Response
+    {
+        $recipes = $em->getRepository(Recipe::class)->findAll();
+        return $this->render('recette/index.html.twig', [
+            'recipes' => $recipes
+        ]);
+    }
+
+    #[Route('/{slug}-{id}', name: "recette_show", requirements: ['id' => '\d+', 'slug' => '[A-Za-z0-9-]+'])]
     public function show(string $slug, int $id, RecipeRepository $recipe): Response
     {
 
@@ -29,33 +48,36 @@ class RecetteController extends AbstractController
         ]);
     }
 
-    #RecipeRepository => recupere la base de donne
-    #[Route('/recipe', name: 'recipe_index')]
-    public function index(EntityManagerInterface $em): Response
-    {
-        $recipes = $em->getRepository(Recipe::class)->findAll();
-        return $this->render('recette/index.html.twig', [
-            'recipes' => $recipes
-        ]);
-    }
-    #[Route("/recipe/creat-new-recipe", name : "recipe_creat_new_recipe")]
-    public function creatNewRecipe(EntityManagerInterface $em , Request $request) : Response
+    #[Route("/creat-recipe", name : "creat_recipe")]
+    public function creatNewRecipe() : Response
     {
         $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe);
+        $form = $this->createForm(RecipeType::class, $recipe, [
+            "action" => $this->generateUrl("recipe_created")
+        ]);
+        return $this->render("recette/creat_recipe.html.twig", [
+            'form' => $form
+        ]);
+    }
+    #[route("/creat-recipe/created" , name: "recipe_created")]
+    public function RecipeCreated(Request $request){
+        $recipe = new Recipe();
+        $form = $this->createForm(RecipeType::class, $recipe, [
+            "action" => $this->generateUrl("recipe_created")
+        ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
             $recipe->setCreatedAt(new DateTimeImmutable());
             $recipe->setUpdatedAt(new DateTimeImmutable());
-            $em->persist($recipe);
-            $em->flush();
+            $this->em->persist($recipe);
+            $this->em->flush();
             
             return $this->redirectToRoute('recipe_index');
             
         }
 
-        return $this->render("recette/creat_new_recipe.html.twig", [
+        return $this->render("recette/creat_recipe.html.twig", [
             'form' => $form
         ]);
     }
