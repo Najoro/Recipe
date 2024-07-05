@@ -59,6 +59,7 @@ class RecetteController extends AbstractController
             'form' => $form
         ]);
     }
+    
     #[route("/creat-recipe/created" , name: "recipe_created")]
     public function RecipeCreated(Request $request){
         $recipe = new Recipe();
@@ -80,5 +81,37 @@ class RecetteController extends AbstractController
         return $this->render("recette/creat_recipe.html.twig", [
             'form' => $form
         ]);
+    }
+
+    #[Route("/{id}/edit" , name: "recipe_edite")]
+    public function recipeEdit(Recipe $recipe, Request $request): Response{
+        
+        $form = $this->createForm(RecipeType::class , $recipe);
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) { 
+
+            $this->em->flush();
+            return $this->redirectToRoute('recipe_index');
+        }
+
+        return $this->render("recette/edit-recipe.html.twig" , [
+            "form" =>$form,
+        ]);
+    }
+    #[Route("/{id}/delete", name : "recipe_delete")]
+    public function recipeDelete(Recipe $recipe): Response 
+    {   
+        return $this->render('/recette/confirme-delete.html.twig',[
+            "recipe" => $recipe,
+        ]);
+    }
+    #[Route("/{id}/confirme-delete", name : "confirme_delete")]
+    public function recipeConfirmDelete(Recipe $recipe): Response 
+    {   
+        $this->em->remove($recipe);
+        $this->em->flush();
+        return $this->redirectToRoute('recipe_index');
     }
 }
