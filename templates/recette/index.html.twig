@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="container mt-2">
 		<h1>Liste des Recettes</h1>
 		<a class="btn btn-primary mb-2" href={{path('creat_recipe')}}>Nouvelle recette</a>
@@ -24,8 +23,8 @@
 						<td scope="row"><a href={{ path('recipe_show', {id : recipe.id , slug : recipe.slug} ) }}>{{recipe.title}}</a></td>
 						<td>{{recipe.durations}} minute</td>
 						<td>
-							<a class="btn btn-warning btn-sm" href={{path("recipe_edite" , {id: recipe.id , slug: recipe.slug})}}>Editer</a>
-							<a class="btn btn-danger btn-sm" href={{path("recipe_delete" , {id: recipe.id , slug: recipe.slug})}}>Supprimer</a>
+							<a class="btn btn-warning btn-sm" href={{path("recipe_edite" , {id: recipe.id})}}>Editer</a>
+							<a class="btn btn-danger btn-sm" href={{path("recipe_delete" , {id: recipe.id})}}>Supprimer</a>
 						</td>
 					</tr>
         {% endfor %}

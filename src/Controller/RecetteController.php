@@ -52,7 +52,7 @@ class RecetteController extends AbstractController
     public function creatNewRecipe() : Response
     {
         $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe, [
+        $form = $this->createForm(RecipeType::class, null, [
             "action" => $this->generateUrl("recipe_created")
         ]);
         return $this->render("recette/creat_recipe.html.twig", [
@@ -74,6 +74,7 @@ class RecetteController extends AbstractController
             $this->em->persist($recipe);
             $this->em->flush();
             
+            $this->addFlash("success" , "Votre recette a bien ete creer");
             return $this->redirectToRoute('recipe_index');
             
         }
@@ -93,13 +94,16 @@ class RecetteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) { 
 
             $this->em->flush();
+            $this->addFlash("success" , "Votre Recette a bien ete modifier");
             return $this->redirectToRoute('recipe_index');
         }
+
 
         return $this->render("recette/edit-recipe.html.twig" , [
             "form" =>$form,
         ]);
     }
+
     #[Route("/{id}/delete", name : "recipe_delete")]
     public function recipeDelete(Recipe $recipe): Response 
     {   
@@ -112,6 +116,7 @@ class RecetteController extends AbstractController
     {   
         $this->em->remove($recipe);
         $this->em->flush();
+        $this->addFlash("danger" , "Votre recette a bien ete supprimer");
         return $this->redirectToRoute('recipe_index');
     }
 }

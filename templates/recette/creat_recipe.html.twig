@@ -3,5 +3,13 @@
 
 {% block body %}
 <h1>Creer une nouvelle recette</h1>
-   {{form(form)}}
+   <div class="">
+      {{form_start(form)}}
+            {{form_row(form.title)}}
+            {{form_row(form.content)}}
+            {{form_row(form.durations)}}
+            {{form_row(form.save)}}
+            {{form_row(form._token)}}
+      {{form_end(form , {"render_rest": false})}}
+   </div>
 {% endblock %}
