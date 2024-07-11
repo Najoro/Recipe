@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Recette :
+	{# {{recipe.title}} #}
+{% endblock %}
+
+{% block body %}
+    {# {{ dump(recipe) }} #}
+	<div class="container mt-2">
+		<h2>
+			Recette a supprimer : <button type="button" class="btn btn-warning">{{recipe.title}}</button>
+		</h2>
+        <p>Dure de preparation : <strong class="text-danger">{{recipe.durations}} min</strong></p>
+		<p>{{recipe.content | nl2br }}</p>
+
+      <a class="btn btn-primary" href={{path("recipe_index")}}>Ne plus supprimer</a>
+      <a class="btn btn-danger" href={{path("confirme_delete" , {id: recipe.id})}}>Confirmer la suppression</a>
+	</div>
+
+{% endblock %}

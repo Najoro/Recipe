@@ -52,13 +52,14 @@ class RecetteController extends AbstractController
     public function creatNewRecipe() : Response
     {
         $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe, [
+        $form = $this->createForm(RecipeType::class, null, [
             "action" => $this->generateUrl("recipe_created")
         ]);
         return $this->render("recette/creat_recipe.html.twig", [
             'form' => $form
         ]);
     }
+    
     #[route("/creat-recipe/created" , name: "recipe_created")]
     public function RecipeCreated(Request $request){
         $recipe = new Recipe();
@@ -73,6 +74,7 @@ class RecetteController extends AbstractController
             $this->em->persist($recipe);
             $this->em->flush();
             
+            $this->addFlash("success" , "Votre recette a bien ete creer");
             return $this->redirectToRoute('recipe_index');
             
         }
@@ -80,5 +82,41 @@ class RecetteController extends AbstractController
         return $this->render("recette/creat_recipe.html.twig", [
             'form' => $form
         ]);
+    }
+
+    #[Route("/{id}/edit" , name: "recipe_edite")]
+    public function recipeEdit(Recipe $recipe, Request $request): Response{
+        
+        $form = $this->createForm(RecipeType::class , $recipe);
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) { 
+
+            $this->em->flush();
+            $this->addFlash("success" , "Votre Recette a bien ete modifier");
+            return $this->redirectToRoute('recipe_index');
+        }
+
+
+        return $this->render("recette/edit-recipe.html.twig" , [
+            "form" =>$form,
+        ]);
+    }
+
+    #[Route("/{id}/delete", name : "recipe_delete")]
+    public function recipeDelete(Recipe $recipe): Response 
+    {   
+        return $this->render('/recette/confirme-delete.html.twig',[
+            "recipe" => $recipe,
+        ]);
+    }
+    #[Route("/{id}/confirme-delete", name : "confirme_delete")]
+    public function recipeConfirmDelete(Recipe $recipe): Response 
+    {   
+        $this->em->remove($recipe);
+        $this->em->flush();
+        $this->addFlash("danger" , "Votre recette a bien ete supprimer");
+        return $this->redirectToRoute('recipe_index');
     }
 }
