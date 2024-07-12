@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\RecipeRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-/**
- * Recipe
- */
+#[UniqueEntity("title")]
 class Recipe
 {
     #[ORM\Id]
@@ -19,12 +20,15 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min : 5 , minMessage : "Ce Champs doit avoir au moin 5 charactere")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min : 3 , minMessage : "Ce Champs doit avoir au moin 5 charactere")]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -34,6 +38,7 @@ class Recipe
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive]
     private ?int $durations = null;
 
     public function getId(): ?int
