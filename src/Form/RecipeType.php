@@ -26,9 +26,7 @@ class RecipeType extends AbstractType
         $builder
             ->add('title' , TextType::class,[
                 "required" => false,
-            ]
-
-            )
+            ])
             ->add('slug' , TextType::class)
             ->add('content', TextareaType::class)
             ->add('durations', IntegerType::class)
@@ -36,7 +34,7 @@ class RecipeType extends AbstractType
                 'label' => "Creer"
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT ,$this->autoSlug(...))
-            // ->addEventListener(FormEvent::POST_SUBMIT, $this->generateDateTime(...) )
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->generateDateTime(...) )
         ;
     }
 
@@ -59,8 +57,6 @@ class RecipeType extends AbstractType
         }
 
     }
-
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

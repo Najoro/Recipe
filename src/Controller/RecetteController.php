@@ -65,7 +65,7 @@ class RecetteController extends AbstractController
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe, [
             "action" => $this->generateUrl("recipe_created")
-        ]);
+        ]); 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
