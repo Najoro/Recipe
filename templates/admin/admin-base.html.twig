@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Administration
 			{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
@@ -33,20 +33,18 @@
 	<header data-bs-theme="dark">
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">App-recette</a>
+				<a class="navbar-brand" href="#">Administration</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
 					<ul class="navbar-nav me-auto mb-2 mb-md-0">
-					{% block LinksMenus %}
 						<li class="nav-item">
-							<a class="nav-link {{ app.current_route == 'home' ? 'active' : '' }}" aria-current="page" href={{ url("home") }}>Home</a>
+							<a class="nav-link {{app.current_route starts with 'admin_recette_' ? 'active' : " " }}" href={{url('admin_recette_index')}}>Recette</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{app.current_route == 'contact' ? 'active' : " " }}" href={{url('contact')}}>Contact</a>
+							<a class="nav-link {{app.current_route starts with 'admin_category_' ? 'active' : " " }}" href={{url('admin_category_show')}}>Category</a>
 						</li>
-					{% endblock %}
 					</ul>
 					<form class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
