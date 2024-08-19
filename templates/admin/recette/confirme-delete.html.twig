@@ -15,7 +15,7 @@
 		<p>{{recipe.content | nl2br }}</p>
 
       <a class="btn btn-primary" href={{path("admin_recette_index")}}>Recettes</a>
-      <a class="btn btn-danger" href={{path("admin_recette_delete" , {id: recipe.id})}}>Confirmer la suppression</a>
+      <a class="btn btn-danger" href={{path("admin_recette_delete_confirm" , {id: recipe.id})}}>Confirmer la suppression</a>
 	</div>
 
 {% endblock %}

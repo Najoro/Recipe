@@ -1,13 +1,17 @@
 {% extends "admin/admin-base.html.twig" %}
-{% block title %}Creer une nouvelle recette{% endblock %}
+{% block title %}Creer une nouvelle recette
+{% endblock %}
 
 {% block body %}
-   <h1>Editer une recette</h1>
-   {{form_start(form)}}
-      {{form_row(form.title)}}
-      {{form_row(form.content)}}
-      {{form_row(form.durations)}}
-      {{form_row(form.save)}}
-      {{form_row(form._token)}}
-   {{form_end(form , {"render_rest": false})}}
+	<h1>Editer une recette</h1>
+	{{form_start(form)}}
+	<div class="row">
+		<div class="col-6">{{form_row(form.title)}}</div>
+		<div class="col-6">{{form_row(form.category)}}</div>
+	</div>
+	{{form_row(form.content)}}
+	{{form_row(form.durations)}}
+	{{form_row(form.save)}}
+	{{form_row(form._token)}}
+	{{form_end(form , {"render_rest": false})}}
 {% endblock %}

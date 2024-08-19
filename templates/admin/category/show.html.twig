@@ -10,7 +10,7 @@
 			<thead class="thead-inverse">
 				<tr>
 					<th>Titre</th>
-					<th>Slug</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -19,9 +19,6 @@
 						<td scope="row">
 							<a href="#">{{categorie.name}}</a>
 						</td>
-                        <td>
-                            <span>{{categorie.slug}}</span>
-                        </td>
 						<td>
 						    <a class="btn btn-warning btn-sm" href={{path("admin_category_edit" , {id: categorie.id} )}}>Editer</a>
 							<a class="btn btn-danger btn-sm" href={{path("admin_category_delete" , {id: categorie.id} )}}>Supprimer</a>

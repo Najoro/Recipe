@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Category;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
@@ -25,8 +26,6 @@ class RecetteController extends AbstractController
     }
  
 
-
-
     #[Route('/', name: 'index')]    
     /**
      * index : afficher tous les recette disponible
@@ -34,10 +33,17 @@ class RecetteController extends AbstractController
      * @param  mixed $em
      * @return Response
      */
-    public function index(EntityManagerInterface $em): Response
+    public function index(): Response
     {
-        $recipes = $em->getRepository(Recipe::class)->findAll();
-        
+        $recipeRep = $this->em->getRepository(Recipe::class);
+        $recipes = $recipeRep->findAll();
+
+        $categoryRep = $this->em->getRepository(Category::class);
+        $platPrincipale = $categoryRep->findOneBy(["slug" => "plat-principale"]);
+
+        $pate = $recipeRep->findOneBy(['slug' => "pates"]);
+        $pate->setCategory($platPrincipale);
+
         return $this->render('admin/recette/index.html.twig', [
             'recipes' => $recipes
         ]);

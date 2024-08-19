@@ -21,18 +21,11 @@ class CategoryType extends AbstractType
         $builder
             ->add('name', TextType::class , [
                 "label" => "name",
-
             ])
             ->add('slug', TextType::class , [
                 "label" => "slug",
                 "required" => false,
             ])
-            // ->add('createdAt', null, [
-            //     'widget' => 'single_text',
-            // ])
-            // ->add('updatedAt', null, [
-            //     'widget' => 'single_text',
-            // ])
             ->add('save', SubmitType::class , [
                 'label' => "enregistrer",
                 'attr' => [
