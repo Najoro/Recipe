@@ -3,7 +3,7 @@
 {% block title %}
 	Recette
 {% endblock %}
-
+{% block body_class %} Recipe-page{% endblock %}
 {% block body %}
 	<div class="container mt-2">
 		<h1>Liste des Recettes</h1>
@@ -31,7 +31,7 @@
 						</td>
 						<td>
 							<a class="btn btn-warning btn-sm" href={{path("admin_recette_edit" , {id: recipe.id} )}}>Editer</a>
-							<a class="btn btn-danger btn-sm" href={{path("admin_recette_delete" , {id: recipe.id} )}}>Supprimer</a>
+							<button id="delete-recipe" class="btn btn-danger btn-sm" data-url={{path("admin_recette_delete" , {id: recipe.id} )}}>Supprimer</button>
 						</td>
 					</tr>
 				{% endfor %}

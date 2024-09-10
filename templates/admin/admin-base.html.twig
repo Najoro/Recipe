@@ -17,6 +17,7 @@
 
 		{% block javascripts %}
 		{{ encore_entry_script_tags('app') }}
+		{{ encore_entry_script_tags('admin')}}
 
 		{# {% block importmap %}
 				{{ importmap('app') }}
@@ -54,11 +55,12 @@
 			</div>
 		</nav>
 	</header>
-	<body class="bg-light">
+	<body class="bg-light {% block body_class %} Admin{% endblock %}">
 		<div class="container mt-5">
 			{% include "partials/flash.html.twig" %}
-
+			
 			{% block body %}{% endblock %}
+		
 		</div>
 	</body>
 </html>
